@@ -1,0 +1,51 @@
+# common
+"@apollo/client": "^3.7.10",
+"@headlessui/react": "^1.7.13",
+"@heroicons/react": "^2.0.17",
+"@monaco-editor/react": "^4.5.1",
+"@nextui-org/react": "^1.0.0-beta.13",
+"@tabler/icons-react": "^2.25.0",
+"@types/node": "18.15.11",
+"@types/react-dom": "^18.2.4",
+"@types/jest": "^29.5.2",
+"@types/react": "^18.0.28",
+"chart.js": "^4.3.0",
+"typescript": "^5.1.3",
+"react": "18.2.0",
+"react-dom": "18.2.0",
+"next": "13.4.8",
+"graphql": "^16.6.0",
+"react-chartjs-2": "^5.2.0",
+"@reduxjs/toolkit": "^1.9.5",
+"react-redux": "^8.1.1",
+"@tailwindcss/forms": "^0.5.3",
+"tailwindcss": "^3.1.8",
+"clsx": "^1.2.1",
+"autoprefixer": "^10.4.8",
+"react-router-dom": "^6.10.0",
+
+
+# gates-ui
+"@next/font": "13.0.7",
+"eslint-config-next": "13.0.7",
+"eslint": "8.30.0",
+
+#admin-dashboard
+
+#chat-ui
+"focus-visible": "^5.2.0",
+"github-markdown-css": "^5.2.0",
+"highlight.js": "^11.8.0",
+"js-cookie": "^3.0.5",
+"lodash.debounce": "^4.0.8",
+"postcss-focus-visible": "^6.0.4",
+"remarkable": "^2.0.1",
+"uuid": "^9.0.0"
+
+#workflow-ui
+"focus-visible": "^5.2.0",
+"lodash.debounce": "^4.0.8",
+"lodash": "^4.17.21",
+"postcss-focus-visible": "^6.0.4",
+"react-draggable": "^4.4.5",
+"use-interval": "^1.4.0"

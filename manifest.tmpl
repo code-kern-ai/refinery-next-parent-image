@@ -1,0 +1,13 @@
+image: kernai/refinery-parent-images:{{build.tag}}-next
+manifests:
+  -
+    image: kernai/refinery-parent-images:{{build.tag}}-next-drone-amd64
+    platform:
+      architecture: amd64
+      os: linux
+  -
+    image: kernai/refinery-parent-images:{{build.tag}}-next-drone-arm64
+    platform:
+      architecture: arm64
+      os: linux
+      variant: v8

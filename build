@@ -1,0 +1,5 @@
+#!/bin/bash
+
+VERSION=v1.11.0
+
+docker build -t kernai/refinery-parent-images:$VERSION-next -f Dockerfile .
