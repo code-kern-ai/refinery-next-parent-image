@@ -33,12 +33,6 @@ platform:
   arch: arm64
 
 steps:
-  - name: submodules
-    image: alpine/git
-    commands:
-      - git submodule init
-      - 'git config --global url."https://github.com/".insteadOf git@github.com:'
-      - "git submodule update --recursive"
   - name: build and publish
     image: plugins/docker
     settings:
@@ -69,12 +63,6 @@ platform:
   arch: amd64
 
 steps:
-  - name: submodules
-    image: alpine/git
-    commands:
-      - git submodule init
-      - 'git config --global url."https://github.com/".insteadOf git@github.com:'
-      - "git submodule update --recursive"
   - name: build and publish
     image: plugins/docker
     settings:
@@ -98,12 +86,6 @@ platform:
   arch: arm64
 
 steps:
-  - name: submodules
-    image: alpine/git
-    commands:
-      - git submodule init
-      - 'git config --global url."https://github.com/".insteadOf git@github.com:'
-      - "git submodule update --recursive "
   - name: build and publish
     image: plugins/docker
     settings:
