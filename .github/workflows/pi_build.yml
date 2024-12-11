@@ -1,0 +1,89 @@
+name: 'Parent Images: Build'
+
+on:
+  workflow_dispatch:
+
+  pull_request:
+    types: [opened, synchronize, reopened]
+    
+permissions:
+  id-token: write
+  contents: write
+  actions: read
+
+jobs: 
+  configure-branch-name:
+    name: 'Configure Head Branch Name'
+    runs-on: ubuntu-latest
+    outputs:
+      gh_head_ref: ${{ steps.configure-branch-name.outputs.gh_head_ref }}
+    steps:
+      - name: Configure branch name
+        id: configure-branch-name
+        run: echo "gh_head_ref=$(echo "${{ github.event.pull_request.head.ref }}" | sed 's|/|-|g')" >> $GITHUB_OUTPUT
+
+  pi-build:
+    name: 'Parent Images: Docker Build'
+    runs-on: ubuntu-latest
+    needs: [configure-branch-name]
+    environment: dev
+    env:
+      PYTHON_VERSION: ${{ vars.PYTHON_VERSION }}
+      DEV_CONTAINER_REGISTRY: ${{ vars.DEV_CONTAINER_REGISTRY }}
+      DEV_LOGIN_USERNAME: ${{ secrets.DEV_LOGIN_USERNAME }}
+      DEV_LOGIN_PASSWORD: ${{ secrets.DEV_LOGIN_PASSWORD }}
+      PARENT_IMAGE_TYPE: ${{ vars.PARENT_IMAGE_TYPE }}
+      DOCKERFILE: ${{ vars.DOCKERFILE }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          fetch-depth: 0
+          submodules: 'true'
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          platforms: linux/amd64,linux/arm64
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64,arm
+
+      - name: Log into DEV registry
+        uses: docker/login-action@v3
+        with:
+          registry: "${{ env.DEV_CONTAINER_REGISTRY }}"
+          username: "${{ env.DEV_LOGIN_USERNAME }}"
+          password: "${{ env.DEV_LOGIN_PASSWORD }}"
+
+      - name: Build & Push refinery-parent-images:${{ needs.configure-branch-name.outputs.gh_head_ref }}-${{ env.PARENT_IMAGE_TYPE }}
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          cache-from: type=registry,ref=${{ env.DEV_CONTAINER_REGISTRY }}/refinery-parent-images:${{ needs.configure-branch-name.outputs.gh_head_ref }}-${{ env.PARENT_IMAGE_TYPE }}-cache
+          cache-to: type=registry,ref=${{ env.DEV_CONTAINER_REGISTRY }}/refinery-parent-images:${{ needs.configure-branch-name.outputs.gh_head_ref }}-${{ env.PARENT_IMAGE_TYPE }}-cache,mode=max,image-manifest=true
+          platforms: linux/amd64
+          file: ${{ env.DOCKERFILE }}
+          tags: ${{ env.DEV_CONTAINER_REGISTRY }}/refinery-parent-images:${{ needs.configure-branch-name.outputs.gh_head_ref }}-${{ env.PARENT_IMAGE_TYPE }}
+          push: true
+          build-args: |
+            platform=linux/amd64
+            label=dockerfile-path=https://github.com/refinery-${{ env.PARENT_IMAGE_TYPE }}-parent-image/blob/${{ github.sha }}/${{ env.DOCKERFILE }}
+
+      - name: Build & Push refinery-parent-images:${{ needs.configure-branch-name.outputs.gh_head_ref }}-${{ env.PARENT_IMAGE_TYPE }}-arm64
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          cache-from: type=registry,ref=${{ env.DEV_CONTAINER_REGISTRY }}/refinery-parent-images:${{ needs.configure-branch-name.outputs.gh_head_ref }}-${{ env.PARENT_IMAGE_TYPE }}-arm64-cache
+          cache-to: type=registry,ref=${{ env.DEV_CONTAINER_REGISTRY }}/refinery-parent-images:${{ needs.configure-branch-name.outputs.gh_head_ref }}-${{ env.PARENT_IMAGE_TYPE }}-arm64-cache,mode=max,image-manifest=true
+          platforms: linux/arm64
+          file: ${{ env.DOCKERFILE }}
+          tags: ${{ env.DEV_CONTAINER_REGISTRY }}/refinery-parent-images:${{ needs.configure-branch-name.outputs.gh_head_ref }}-${{ env.PARENT_IMAGE_TYPE }}-arm64
+          push: true
+          build-args: |
+            platform=linux/arm64
+            label=dockerfile-path=https://github.com/refinery-${{ env.PARENT_IMAGE_TYPE }}-parent-image/blob/${{ github.sha }}/${{ env.DOCKERFILE }}
+      
