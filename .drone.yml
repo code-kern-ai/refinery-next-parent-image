@@ -6,8 +6,19 @@ platform:
   arch: amd64
 
 steps:
+  - name: login dhi.io
+    image: docker:cli
+    environment:
+      DOCKER_USERNAME:
+        from_secret: dockerhub_username
+      DOCKER_PASSWORD:
+        from_secret: dockerhub_password
+    commands:
+      - echo "$DOCKER_PASSWORD" | docker login dhi.io -u "$DOCKER_USERNAME" --password-stdin
   - name: build and publish
     image: plugins/docker
+    depends_on:
+      - login dhi.io
     settings:
       registry: registry.dev.kern.ai
       username:
@@ -33,8 +44,19 @@ platform:
   arch: arm64
 
 steps:
+  - name: login dhi.io
+    image: docker:cli
+    environment:
+      DOCKER_USERNAME:
+        from_secret: dockerhub_username
+      DOCKER_PASSWORD:
+        from_secret: dockerhub_password
+    commands:
+      - echo "$DOCKER_PASSWORD" | docker login dhi.io -u "$DOCKER_USERNAME" --password-stdin
   - name: build and publish
     image: plugins/docker
+    depends_on:
+      - login dhi.io
     settings:
       registry: registry.dev.kern.ai
       username:
@@ -63,8 +85,19 @@ platform:
   arch: amd64
 
 steps:
+  - name: login dhi.io
+    image: docker:cli
+    environment:
+      DOCKER_USERNAME:
+        from_secret: dockerhub_username
+      DOCKER_PASSWORD:
+        from_secret: dockerhub_password
+    commands:
+      - echo "$DOCKER_PASSWORD" | docker login dhi.io -u "$DOCKER_USERNAME" --password-stdin
   - name: build and publish
     image: plugins/docker
+    depends_on:
+      - login dhi.io
     settings:
       username:
         from_secret: dockerhub_username
@@ -86,8 +119,19 @@ platform:
   arch: arm64
 
 steps:
+  - name: login dhi.io
+    image: docker:cli
+    environment:
+      DOCKER_USERNAME:
+        from_secret: dockerhub_username
+      DOCKER_PASSWORD:
+        from_secret: dockerhub_password
+    commands:
+      - echo "$DOCKER_PASSWORD" | docker login dhi.io -u "$DOCKER_USERNAME" --password-stdin
   - name: build and publish
     image: plugins/docker
+    depends_on:
+      - login dhi.io
     settings:
       username:
         from_secret: dockerhub_username
