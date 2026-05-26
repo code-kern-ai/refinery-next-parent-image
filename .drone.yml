@@ -30,8 +30,7 @@ steps:
       cache_from:
         - "registry.dev.kern.ai/code-kern-ai/refinery-parent-images:dev-next"
         - "registry.dev.kern.ai/code-kern-ai/refinery-parent-images:${DRONE_COMMIT_BRANCH}-next"
-      config:
-        from_secret: docker_config_json 
+
 
 trigger:
   event:
@@ -71,8 +70,7 @@ steps:
       cache_from:
         - "registry.dev.kern.ai/code-kern-ai/refinery-parent-images:dev-next-arm64"
         - "registry.dev.kern.ai/code-kern-ai/refinery-parent-images:${DRONE_COMMIT_BRANCH}-next-arm64"
-      config:
-        from_secret: docker_config_json 
+
 trigger:
   branch:
     - dev
@@ -108,8 +106,7 @@ steps:
         from_secret: dockerhub_password
       repo: "kernai/refinery-parent-images"
       tag: "${DRONE_TAG}-next-drone-amd64"
-      config:
-        from_secret: docker_config_json 
+
 trigger:
   event:
     - tag
@@ -143,8 +140,6 @@ steps:
         from_secret: dockerhub_password
       repo: "kernai/refinery-parent-images"
       tag: "${DRONE_TAG}-next-drone-arm64"
-      config:
-        from_secret: docker_config_json 
 trigger:
   event:
     - tag
