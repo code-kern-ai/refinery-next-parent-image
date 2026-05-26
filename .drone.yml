@@ -21,6 +21,9 @@ steps:
         from_secret: dockerhub_password
       repo: "registry.dev.kern.ai/code-kern-ai/refinery-parent-images"
       tags: ["${DRONE_COMMIT_SHA}-next", "${DRONE_COMMIT_BRANCH}-next"]
+      cache_from:
+        - "registry.dev.kern.ai/code-kern-ai/refinery-parent-images:dev-next"
+        - "registry.dev.kern.ai/code-kern-ai/refinery-parent-images:${DRONE_COMMIT_BRANCH}-next"
 
 trigger:
   event:
@@ -51,6 +54,9 @@ steps:
       repo: "registry.dev.kern.ai/code-kern-ai/refinery-parent-images"
       tags:
         ["${DRONE_COMMIT_SHA}-next-arm64", "${DRONE_COMMIT_BRANCH}-next-arm64"]
+      cache_from:
+        - "registry.dev.kern.ai/code-kern-ai/refinery-parent-images:dev-next"
+        - "registry.dev.kern.ai/code-kern-ai/refinery-parent-images:${DRONE_COMMIT_BRANCH}-next"
 
 trigger:
   branch:
