@@ -7,7 +7,7 @@ platform:
 
 steps:
   - name: build and publish
-    image: plugins/docker
+    image: plugins/docker:21.2.8-linux-amd64
     settings:
       registry: registry.dev.kern.ai
       username:
@@ -36,7 +36,7 @@ platform:
 
 steps:
   - name: build and publish
-    image: plugins/docker
+    image: plugins/docker:21.2.8-linux-amd64
     settings:
       registry: registry.dev.kern.ai
       username:
@@ -68,7 +68,7 @@ platform:
 
 steps:
   - name: build and publish
-    image: plugins/docker
+    image: plugins/docker:21.2.8-linux-amd64
     settings:
       username:
         from_secret: dockerhub_username
@@ -96,7 +96,7 @@ platform:
 
 steps:
   - name: build and publish
-    image: plugins/docker
+    image: plugins/docker:21.2.8-linux-amd64
     settings:
       username:
         from_secret: dockerhub_username
