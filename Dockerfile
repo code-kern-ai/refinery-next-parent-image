@@ -1,5 +1,5 @@
-ARG DHI_NODE_BUILD=dhi.io/node:20-debian12-dev@sha256:57ce14e7f0abfc500c231d8a95a19ece080cf84010a043706a7bc56705ad8ab2
-ARG DHI_NODE_RUNTIME=dhi.io/node:20-debian12-dev@sha256:57ce14e7f0abfc500c231d8a95a19ece080cf84010a043706a7bc56705ad8ab2
+ARG DHI_NODE_BUILD=dhi.io/node:20-debian12-dev
+ARG DHI_NODE_RUNTIME=dhi.io/node:20-debian12-dev
 
 FROM ${DHI_NODE_BUILD} AS builder
 
