@@ -9,6 +9,7 @@ steps:
   - name: build and publish
     image: plugins/docker:21
     settings:
+      platform: linux/amd64
       registry: registry.dev.kern.ai
       username:
         from_secret: docker_username
@@ -20,7 +21,6 @@ steps:
       base_image_password:
         from_secret: dockerhub_password
       repo: "registry.dev.kern.ai/code-kern-ai/refinery-parent-images"
-      platform: linux/amd64
       tags: ["${DRONE_COMMIT_SHA}-next", "${DRONE_COMMIT_BRANCH}-next"]
       cache_from:
         - "registry.dev.kern.ai/code-kern-ai/refinery-parent-images:dev-next"
@@ -43,6 +43,7 @@ steps:
     image: plugins/docker:21
     settings:
       registry: registry.dev.kern.ai
+      platform: linux/arm64
       username:
         from_secret: docker_username
       password:
@@ -53,8 +54,6 @@ steps:
       base_image_password:
         from_secret: dockerhub_password
       repo: "registry.dev.kern.ai/code-kern-ai/refinery-parent-images"
-      platform: linux/arm64
-      target_platform: linux/arm64
       tags:
         ["${DRONE_COMMIT_SHA}-next-arm64", "${DRONE_COMMIT_BRANCH}-next-arm64"]
       cache_from:
@@ -119,7 +118,6 @@ steps:
         from_secret: dockerhub_password
       repo: "kernai/refinery-parent-images"
       platform: linux/arm64
-      target_platform: linux/arm64
       tag: "${DRONE_TAG}-next-drone-arm64"
 trigger:
   event:
