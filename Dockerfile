@@ -18,5 +18,3 @@ WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
 
 COPY --from=builder --chown=65532:65532 /app/node_modules /app/node_modules
-
-USER 65532:65532
