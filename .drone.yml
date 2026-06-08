@@ -10,6 +10,7 @@ steps:
     image: plugins/docker:21
     settings:
       platform: linux/amd64
+      target_platform: linux/amd64
       registry: registry.dev.kern.ai
       username:
         from_secret: docker_username
@@ -42,8 +43,9 @@ steps:
   - name: build and publish
     image: plugins/docker:21
     settings:
-      registry: registry.dev.kern.ai
       platform: linux/arm64
+      target_platform: linux/arm64
+      registry: registry.dev.kern.ai
       username:
         from_secret: docker_username
       password:
@@ -78,6 +80,8 @@ steps:
   - name: build and publish
     image: plugins/docker:21
     settings:
+      platform: linux/amd64
+      target_platform: linux/amd64
       username:
         from_secret: dockerhub_username
       password:
@@ -88,7 +92,6 @@ steps:
       base_image_password:
         from_secret: dockerhub_password
       repo: "kernai/refinery-parent-images"
-      platform: linux/amd64
       tag: "${DRONE_TAG}-next-drone-amd64"
 
 trigger:
@@ -107,6 +110,8 @@ steps:
   - name: build and publish
     image: plugins/docker:21
     settings:
+      platform: linux/arm64
+      target_platform: linux/arm64
       username:
         from_secret: dockerhub_username
       password:
@@ -117,7 +122,6 @@ steps:
       base_image_password:
         from_secret: dockerhub_password
       repo: "kernai/refinery-parent-images"
-      platform: linux/arm64
       tag: "${DRONE_TAG}-next-drone-arm64"
 trigger:
   event:
