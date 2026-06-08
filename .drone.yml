@@ -8,9 +8,10 @@ platform:
 steps:
   - name: build and publish
     image: plugins/docker:21
+    environment:
+      BUILDX_NO_DEFAULT_ATTESTATIONS: "1"
     settings:
       platform: linux/amd64
-      target_platform: linux/amd64
       registry: registry.dev.kern.ai
       username:
         from_secret: docker_username
@@ -42,9 +43,10 @@ platform:
 steps:
   - name: build and publish
     image: plugins/docker:21
+    environment:
+      BUILDX_NO_DEFAULT_ATTESTATIONS: "1"
     settings:
       platform: linux/arm64
-      target_platform: linux/arm64
       registry: registry.dev.kern.ai
       username:
         from_secret: docker_username
@@ -79,9 +81,10 @@ platform:
 steps:
   - name: build and publish
     image: plugins/docker:21
+    environment:
+      BUILDX_NO_DEFAULT_ATTESTATIONS: "1"
     settings:
       platform: linux/amd64
-      target_platform: linux/amd64
       username:
         from_secret: dockerhub_username
       password:
@@ -109,9 +112,10 @@ platform:
 steps:
   - name: build and publish
     image: plugins/docker:21
+    environment:
+      BUILDX_NO_DEFAULT_ATTESTATIONS: "1"
     settings:
       platform: linux/arm64
-      target_platform: linux/arm64
       username:
         from_secret: dockerhub_username
       password:
