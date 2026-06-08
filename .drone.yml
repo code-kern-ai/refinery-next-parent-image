@@ -7,13 +7,19 @@ platform:
 
 steps:
   - name: build and publish
-    image: plugins/docker
+    image: plugins/docker:21
     settings:
+      platform: linux/amd64
       registry: registry.dev.kern.ai
       username:
         from_secret: docker_username
       password:
         from_secret: docker_password
+      base_image_registry: dhi.io
+      base_image_username:
+        from_secret: dockerhub_username
+      base_image_password:
+        from_secret: dockerhub_password
       repo: "registry.dev.kern.ai/code-kern-ai/refinery-parent-images"
       tags: ["${DRONE_COMMIT_SHA}-next", "${DRONE_COMMIT_BRANCH}-next"]
       cache_from:
@@ -34,13 +40,19 @@ platform:
 
 steps:
   - name: build and publish
-    image: plugins/docker
+    image: plugins/docker:21
     settings:
       registry: registry.dev.kern.ai
+      platform: linux/arm64
       username:
         from_secret: docker_username
       password:
         from_secret: docker_password
+      base_image_registry: dhi.io
+      base_image_username:
+        from_secret: dockerhub_username
+      base_image_password:
+        from_secret: dockerhub_password
       repo: "registry.dev.kern.ai/code-kern-ai/refinery-parent-images"
       tags:
         ["${DRONE_COMMIT_SHA}-next-arm64", "${DRONE_COMMIT_BRANCH}-next-arm64"]
@@ -64,13 +76,19 @@ platform:
 
 steps:
   - name: build and publish
-    image: plugins/docker
+    image: plugins/docker:21
     settings:
       username:
         from_secret: dockerhub_username
       password:
         from_secret: dockerhub_password
+      base_image_registry: dhi.io
+      base_image_username:
+        from_secret: dockerhub_username
+      base_image_password:
+        from_secret: dockerhub_password
       repo: "kernai/refinery-parent-images"
+      platform: linux/amd64
       tag: "${DRONE_TAG}-next-drone-amd64"
 
 trigger:
@@ -87,15 +105,20 @@ platform:
 
 steps:
   - name: build and publish
-    image: plugins/docker
+    image: plugins/docker:21
     settings:
       username:
         from_secret: dockerhub_username
       password:
         from_secret: dockerhub_password
+      base_image_registry: dhi.io
+      base_image_username:
+        from_secret: dockerhub_username
+      base_image_password:
+        from_secret: dockerhub_password
       repo: "kernai/refinery-parent-images"
+      platform: linux/arm64
       tag: "${DRONE_TAG}-next-drone-arm64"
-
 trigger:
   event:
     - tag
